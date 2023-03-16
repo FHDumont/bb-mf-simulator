@@ -1,0 +1,23 @@
+{
+  "name": "ftw-loader",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "chance": "^1.1.11",
+    "js-yaml": "^4.1.0",
+    "json5": "^2.2.3",
+    "lodash": "^4.17.21",
+    "needle": "^3.2.0",
+    "puppeteer": "^19.7.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.35.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-standard": "^5.0.0"
+  }
+}

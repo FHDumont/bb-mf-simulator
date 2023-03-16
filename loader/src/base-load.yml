@@ -1,0 +1,39 @@
+sortDevices: true
+sortLocations: true
+tests:
+  - usecase:
+    name: normal case
+    wait: 10
+    count: 8
+    pages: 
+      - { url: "http://localhost:4200/pages/home" }
+      - { url: "http://localhost:4200/auth/login" }
+      - { url: "http://localhost:4200/pages/search" }
+      - { url: "http://localhost:4200/pages/book" }
+      - { url: "http://localhost:4200/pages/track" }
+      - { url: "http://localhost:4200/auth/logout" }
+  - usecase:
+    name: just looking
+    wait: 5
+    count: 1
+    pages: 
+      - { url: "http://localhost:4200/pages/airline" }
+      - { url: "http://localhost:4200/pages/home" }
+      - { url: "http://localhost:4200/pages/airline" }
+      - { url: "http://localhost:4200/pages/search" }
+  - usecase:
+    name: book twice
+    wait: 5
+    count: 1
+    pages: 
+      - { url: "http://localhost:4200/auth/login" }    
+      - { url: "http://localhost:4200/pages/airline" }
+      - { url: "http://localhost:4200/pages/search" }
+      - { url: "http://localhost:4200/pages/home" }
+      - { url: "http://localhost:4200/pages/book" }
+  - usecase:
+    name: use case UC_ERROR_INSERT_QUERY
+    wait: 20
+    count: 1
+    pages: 
+      - { url: "http://localhost:4200/api/error-db/no@email.com" }
