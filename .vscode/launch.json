@@ -6,15 +6,22 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Tests",
+      "request": "launch",
+      "mainClass": "br.com.bb.Tests",
+      "projectName": "mainframe-plugin"
+    },
+    {
+      "type": "java",
       "name": "API SIMULATOR",
       "request": "launch",
       "mainClass": "com.dumont.apisimulator.ApiSimulatorApplication",
       "projectName": "api-simulator",
       "vmArgs": "-javaagent:/Users/fdumont/Downloads/AppD/Artifacts/Agents/java-agent-23.2.0.34668/javaagent.jar",
       "env": {
-        "APPDYNAMICS_CONTROLLER_HOST_NAME": "xxx.saas.appdynamics.com",
-        "APPDYNAMICS_AGENT_ACCOUNT_NAME": "xxx",
-        "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY": "xxxx",
+        "APPDYNAMICS_CONTROLLER_HOST_NAME": "se-lab.saas.appdynamics.com",
+        "APPDYNAMICS_AGENT_ACCOUNT_NAME": "se-lab",
+        "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY": "hj6a4d7h2cuq",
         "APPDYNAMICS_CONTROLLER_PORT": "443",
         "APPDYNAMICS_CONTROLLER_SSL_ENABLED": "true",
         "APPDYNAMICS_AGENT_APPLICATION_NAME": "DUMONT-MF-SIMULATOR",

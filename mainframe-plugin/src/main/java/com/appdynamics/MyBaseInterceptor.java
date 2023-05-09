@@ -1,4 +1,4 @@
-package br.com.bb;
+package com.appdynamics;
 
 import java.io.File;
 import java.io.FileInputStream;

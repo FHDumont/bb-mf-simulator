@@ -188,3 +188,4 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/node,java,visualstudiocode
 
 target/
+*.DS_Store

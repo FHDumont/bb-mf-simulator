@@ -41,6 +41,12 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
+		<!-- IIB -->
+		<dependency>
+			<groupId>br.com.bb</groupId>
+			<artifactId>iib</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
