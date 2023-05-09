@@ -31,7 +31,6 @@ public class MainframeInterceptor extends MyBaseInterceptor {
             // FTW
             getInfo = makeInvokeInstanceMethodReflector("getInfo");
             getPadrao = makeInvokeInstanceMethodReflector("getPadrao");
-
             getCodigo = makeInvokeInstanceMethodReflector("getCodigo");
             getNome = makeInvokeInstanceMethodReflector("getNome");
             getBarramento = makeInvokeInstanceMethodReflector("getBarramento");
@@ -40,13 +39,8 @@ public class MainframeInterceptor extends MyBaseInterceptor {
             getInfoOperacao = makeInvokeInstanceMethodReflector("getInfoOperacao");
             getIdentificacao = makeInvokeInstanceMethodReflector("getIdentificacao");
             getProtocolo = makeInvokeInstanceMethodReflector("getProtocolo");
-            // getRelease = makeInvokeInstanceMethodReflector("getRelease");
             getSistema = makeInvokeInstanceMethodReflector("getSistema");
-            // getSysplex = makeInvokeInstanceMethodReflector("getSysplex");
             getOperacao = makeInvokeInstanceMethodReflector("getOperacao");
-            // getAplicacaoProvedora =
-            // makeInvokeInstanceMethodReflector("getAplicacaoProvedora");
-            // getVersao = makeInvokeInstanceMethodReflector("getVersao");
         } catch (Exception ex) {
             getLogger().error(ex.getMessage(), ex);
         }
@@ -63,13 +57,6 @@ public class MainframeInterceptor extends MyBaseInterceptor {
                 .methodMatchString("processar")
                 .withParams("br.com.bb.ftw.sessao.Sessao", "br.com.bb.ftw.transacao.Transacao", "byte[]")
                 .build());
-
-        // rules.add(new Rule.Builder(
-        // "br.com.bb.iib.ComunicacaoExecutar")
-        // .classMatchType(SDKClassMatchType.MATCHES_CLASS)
-        // .methodMatchString("executar")
-        // .withParams("br.com.bb.iib.ContextoExecucao")
-        // .build());
 
         rules.add(new Rule.Builder(
                 "br.com.bb.iib.Comunicacao")
@@ -145,35 +132,11 @@ public class MainframeInterceptor extends MyBaseInterceptor {
 
         // Fields
         Object infoOperacao = getReflectiveObject(paramTransaction, getInfoOperacao);
-
-        // String operationClass = infoOperacao.getClass().getSimpleName();
-
         Object transporte = getReflectiveObject(infoOperacao, getTransporte);
-
         Object protocolo = getReflectiveObject(infoOperacao, getProtocolo);
-
         Object identificacao = getReflectiveObject(infoOperacao, getIdentificacao);
-
-        // String release = getReflectiveString(identificacao, getRelease,
-        // "UNKNOW-RELEASE");
-        // getLogger().info(String.format("==> release: %s", release));
-
         String sistema = getReflectiveString(identificacao, getSistema, "UNKNOW-SISTEMA");
-
-        // String sysplex = getReflectiveString(identificacao, getSysplex,
-        // "UNKNOW-SYSPLEX");
-
         String operacao = getReflectiveString(identificacao, getOperacao, "UNKNOW-OPERACAO");
-
-        // String servico = getReflectiveString(identificacao, getServico,
-        // "UNKNOW-SERVICO");
-
-        // String aplicacaoProvedora = getReflectiveString(identificacao,
-        // getAplicacaoProvedora,
-        // "UNKNOW-APLICACAO-PROVEDORA");
-
-        // String versao = getReflectiveString(identificacao, getVersao,
-        // "UNKNOW-VERSAO");
 
         // Custom Backend
         exitCallName = String.format("IIB - %s", transporte);
@@ -186,11 +149,6 @@ public class MainframeInterceptor extends MyBaseInterceptor {
         collectSnapshotData(transaction, "Protocolo", String.valueOf(protocolo));
         collectSnapshotData(transaction, "Operacao", operacao);
         collectSnapshotData(transaction, "Sistema", sistema);
-        // collectSnapshotData(transaction, "Release", release);
-        // collectSnapshotData(transaction, "Sysplex", sysplex);
-        // collectSnapshotData(transaction, "Servico", servico);
-        // collectSnapshotData(transaction, "AplicacaoProvedora", aplicacaoProvedora);
-        // collectSnapshotData(transaction, "Versao", versao);
 
         if (exitCall != null) {
             return new State(exitCall, String.format("IIB - %s", transporte), operacao, startTime);
@@ -214,23 +172,11 @@ public class MainframeInterceptor extends MyBaseInterceptor {
                 result = mainframeIIB(transaction, objectIntercepted, className, methodName, params);
             }
         } catch (Exception ex) {
-            getLogger().info("==> ERROR no método onMethodBegin 1: " + ex.getMessage());
-            getLogger().info("==> ERROR no método onMethodBegin 2: " + className + " // " + methodName);
             getLogger().error(ex.getMessage(), ex);
             result = null;
         }
 
         return result;
-
-        // Transaction transactionSED =
-        // AppdynamicsAgent.startTransactionAndServiceEndPoint("XXX", null,
-        // String.format("SED %s.%s.%s", transporte, padrao, codigo), EntryTypes.POJO,
-        // false);
-
-        // getLogger().info("==> SED begin: " + transactionSED.getUniqueIdentifier() + "
-        // ==> " + String.format(
-        // "SED %s.%s.%s", transporte, padrao,
-        // codigo));
 
     }
 
@@ -247,7 +193,6 @@ public class MainframeInterceptor extends MyBaseInterceptor {
         try {
             Transaction transaction = AppdynamicsAgent.getTransaction();
 
-            // Transaction transactionSED = ((State) state).transactionSED;
             ExitCall exitCall = ((State) state).exitCall;
             String basicMetricName = ((State) state).basicMetricName;
             String metricName = ((State) state).metricName;
@@ -255,14 +200,10 @@ public class MainframeInterceptor extends MyBaseInterceptor {
 
             if (exception != null) {
                 transaction.markAsError(exception.getMessage());
-                // transactionSED.markAsError(String.format("FTW - %s.%s Exception
-                // %s", exception));
                 isError = true;
             }
 
-            // getLogger().info("==> SED end: " + transactionSED.getUniqueIdentifier());
             exitCall.end();
-            // transactionSED.end();
 
             MetricPublisher metricPublisher = AppdynamicsAgent.getMetricPublisher();
             metricPublisher.reportAverageMetric(
@@ -294,7 +235,6 @@ public class MainframeInterceptor extends MyBaseInterceptor {
             this.basicMetricName = basicMetricName;
             this.metricName = metricName;
             this.startTime = startTime;
-
         }
 
         public ExitCall exitCall;
