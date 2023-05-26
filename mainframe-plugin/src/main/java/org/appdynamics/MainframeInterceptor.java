@@ -1,4 +1,4 @@
-package com.appdynamics;
+package org.appdynamics;
 
 import java.util.ArrayList;
 import java.util.Date;
