@@ -46,28 +46,24 @@
       <groupId>com.appdynamics</groupId>
       <artifactId>appagent</artifactId>
       <version>23.12.0.35361</version>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>com.appdynamics</groupId>
       <artifactId>appagent-boot</artifactId>
       <version>23.12.0.35361</version>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>com.appdynamics</groupId>
       <artifactId>common-utils</artifactId>
       <version>23.12.0.35361</version>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>com.appdynamics</groupId>
       <artifactId>singularity-log4j</artifactId>
       <version>23.12.0.35361</version>
-      <scope>provided</scope>
     </dependency>
 
   </dependencies>
