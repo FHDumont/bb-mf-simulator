@@ -1,4 +1,4 @@
-package org.appdynamics;
+package com.appdynamics.bb.mainframe.interceptor;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,12 +18,13 @@ import com.appdynamics.agent.api.AppdynamicsAgent;
 import com.appdynamics.agent.api.ExitCall;
 import com.appdynamics.agent.api.Transaction;
 import com.appdynamics.apm.appagent.api.DataScope;
+import com.appdynamics.bb.mainframe.MetaData;
 import com.appdynamics.instrumentation.sdk.Rule;
 import com.appdynamics.instrumentation.sdk.template.AGenericInterceptor;
 import com.appdynamics.instrumentation.sdk.toolbox.reflection.IReflector;
 import com.appdynamics.instrumentation.sdk.toolbox.reflection.ReflectorException;
 
-public abstract class MyBaseInterceptor extends AGenericInterceptor {
+public abstract class AgentSideInterceptor extends AGenericInterceptor {
 
     protected static final Object CORRELATION_HEADER_KEY = AppdynamicsAgent.TRANSACTION_CORRELATION_HEADER;
     protected boolean initialized = false;
@@ -33,7 +34,7 @@ public abstract class MyBaseInterceptor extends AGenericInterceptor {
     protected static final String PLUGIN_PROPERTIES_FILE_NAME = "mainframe-plugin.properties";
     private Properties properties;
 
-    public MyBaseInterceptor() {
+    public AgentSideInterceptor() {
         super();
         initialize();
         getLogger().info(String.format("Initialized plugin class %s version %s build date %s",
@@ -235,8 +236,6 @@ public abstract class MyBaseInterceptor extends AGenericInterceptor {
         this.getLogger().debug("Begin publishEvent event summary: " + eventSummary + " severity: " + severity
                 + " event type: " + eventType);
         AppdynamicsAgent.getEventPublisher().publishEvent(eventSummary, severity, eventType, details);
-        this.getLogger().debug("Finish publishEvent event summary: " + eventSummary + " severity: " + severity
-                + " event type: " + eventType);
     }
 
     protected void reportMetric(String metricName, long metricValue, String aggregationType, String timeRollupType,
@@ -247,9 +246,5 @@ public abstract class MyBaseInterceptor extends AGenericInterceptor {
                         + clusterRollupType);
         AppdynamicsAgent.getMetricPublisher().reportMetric(metricName, metricValue, aggregationType, timeRollupType,
                 clusterRollupType);
-        this.getLogger()
-                .debug("Finish reportMetric name: " + metricName + " = " + metricValue + " aggregation type: "
-                        + aggregationType + " time rollup type: " + timeRollupType + " cluster rollup type: "
-                        + clusterRollupType);
     }
 }

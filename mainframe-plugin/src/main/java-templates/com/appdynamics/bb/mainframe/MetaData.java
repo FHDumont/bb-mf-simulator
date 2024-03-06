@@ -1,4 +1,4 @@
-package org.appdynamics;
+package com.appdynamics.bb.mainframe;
 
 public class MetaData {
     public static final String VERSION = "v${plugin-version}";
