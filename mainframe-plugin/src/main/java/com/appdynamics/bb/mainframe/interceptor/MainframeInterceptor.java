@@ -211,7 +211,7 @@ public class MainframeInterceptor extends AgentSideInterceptor {
 
             }
 
-            getLogger().info("[getSystemProperties] [" + environmentValues[0] + "] [" + environmentValues[1] + "]");
+            getLogger().debug("[getSystemProperties] [" + environmentValues[0] + "] [" + environmentValues[1] + "]");
 
         } catch (Exception e) {
             getLogger().error("[getSystemProperties] ", e);
@@ -228,7 +228,7 @@ public class MainframeInterceptor extends AgentSideInterceptor {
 
         try {
             propertiesValue = System.getenv(properties);
-            getLogger().info("[getSystemProperties] property [" + properties + "] value [" + propertiesValue + "]");
+            getLogger().debug("[getSystemProperties] property [" + properties + "] value [" + propertiesValue + "]");
             if (propertiesValue == null)
                 propertiesValue = "";
         } catch (Exception e) {

@@ -1,17 +1,11 @@
 package com.appdynamics.bb.mainframe.interceptor;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import com.appdynamics.agent.api.AppdynamicsAgent;
@@ -29,10 +23,6 @@ public abstract class AgentSideInterceptor extends AGenericInterceptor {
     protected static final Object CORRELATION_HEADER_KEY = AppdynamicsAgent.TRANSACTION_CORRELATION_HEADER;
     protected boolean initialized = false;
     protected Set<DataScope> dataScopes = null;
-    protected Set<DataScope> snapshotDatascopeOnly = null;
-    protected static final String DISABLE_ANALYTICS_COLLECTION_PROPERTY = "disablePluginAnalytics";
-    protected static final String PLUGIN_PROPERTIES_FILE_NAME = "mainframe-plugin.properties";
-    private Properties properties;
 
     public AgentSideInterceptor() {
         super();
@@ -56,50 +46,12 @@ public abstract class AgentSideInterceptor extends AGenericInterceptor {
     protected void initialize() {
         dataScopes = new HashSet<DataScope>();
         dataScopes.add(DataScope.SNAPSHOTS);
-        if (System.getProperty(DISABLE_ANALYTICS_COLLECTION_PROPERTY, "false").equalsIgnoreCase("false")) {
-            dataScopes.add(DataScope.ANALYTICS);
-            this.getLogger().info("Enabling Analytics Collection of Plugin Custom Data, to disable add JVM property -D"
-                    + DISABLE_ANALYTICS_COLLECTION_PROPERTY + "=true");
-        }
-        snapshotDatascopeOnly = new HashSet<DataScope>();
-        snapshotDatascopeOnly.add(DataScope.SNAPSHOTS);
-        loadProperties();
-        saveProperties();
+        dataScopes.add(DataScope.ANALYTICS);
         this.initialized = true;
-    }
-
-    protected void loadProperties() {
-        if (this.properties == null) {
-            this.properties = new Properties();
-            String defaultProperty = "true";
-            if (System.getProperty(DISABLE_ANALYTICS_COLLECTION_PROPERTY, "false").equalsIgnoreCase("true")) {
-                defaultProperty = "false";
-            }
-            for (Rule rule : this.getRules()) {
-                this.properties.setProperty(rule.getClassMatchString() + "-enableAnalyticsData", defaultProperty);
-            }
-            for (String customPropertyKey : getListOfCustomProperties().keySet()) {
-                this.properties.setProperty(customPropertyKey, getListOfCustomProperties().get(customPropertyKey));
-            }
-            File configFile = new File(this.getAgentPluginDirectory() + System.getProperty("file.separator", "/")
-                    + PLUGIN_PROPERTIES_FILE_NAME);
-            InputStream is = null;
-            if (configFile.canRead()) {
-                try {
-                    is = new FileInputStream(configFile);
-                    this.properties.load(is);
-                } catch (Exception e) {
-                }
-            }
-        }
     }
 
     protected Map<String, String> getListOfCustomProperties() {
         return new HashMap<>();
-    }
-
-    protected boolean isAnalyticsEnabledForClass(String className) {
-        return this.properties.getProperty(className + "-enableAnalyticsData", "true").toLowerCase().equals("true");
     }
 
     protected boolean isFakeTransaction(Transaction transaction) {
@@ -108,19 +60,6 @@ public abstract class AgentSideInterceptor extends AGenericInterceptor {
 
     protected boolean isFakeExitCall(ExitCall exitCall) {
         return "".equals(exitCall.getCorrelationHeader());
-    }
-
-    protected void saveProperties() {
-        File configFile = new File(this.getAgentPluginDirectory() + System.getProperty("file.separator", "/")
-                + PLUGIN_PROPERTIES_FILE_NAME);
-        try {
-            if (!configFile.canRead())
-                configFile.createNewFile();
-            OutputStream out = new FileOutputStream(configFile);
-            properties.store(out, "Writing current properties to file for next load");
-        } catch (Exception e) {
-            this.getLogger().info("Error saving properties file, exception: " + e.getMessage(), e);
-        }
     }
 
     protected String getUrlWithoutParameters(String url) {
@@ -155,7 +94,7 @@ public abstract class AgentSideInterceptor extends AGenericInterceptor {
             if (value == null)
                 return defaultString;
         } catch (ReflectorException e) {
-            this.getLogger().info("Error in reflection call, exception: " + e.getMessage(), e);
+            this.getLogger().debug("Error in reflection call, exception: " + e.getMessage(), e);
         }
         return value;
     }
@@ -169,7 +108,7 @@ public abstract class AgentSideInterceptor extends AGenericInterceptor {
             if (value == null)
                 return defaultInteger;
         } catch (ReflectorException e) {
-            this.getLogger().info("Error in reflection call, exception: " + e.getMessage(), e);
+            this.getLogger().debug("Error in reflection call, exception: " + e.getMessage(), e);
         }
         return value;
     }
@@ -200,7 +139,7 @@ public abstract class AgentSideInterceptor extends AGenericInterceptor {
                 value = method.execute(object.getClass().getClassLoader(), object);
             }
         } catch (ReflectorException e) {
-            this.getLogger().info("Error in reflection call, method: " + method.getClass().getCanonicalName()
+            this.getLogger().debug("Error in reflection call, method: " + method.getClass().getCanonicalName()
                     + " object: " + object.getClass().getCanonicalName() + " exception: " + e.getMessage(), e);
         }
         return value;
@@ -216,11 +155,7 @@ public abstract class AgentSideInterceptor extends AGenericInterceptor {
         if (!isInitialized()) {
             initialize();
         }
-        if (isAnalyticsEnabledForClass(className)) {
-            transaction.collectData(name, value, this.dataScopes);
-        } else {
-            transaction.collectData(name, value, this.snapshotDatascopeOnly);
-        }
+        transaction.collectData(name, value, this.dataScopes);
     }
 
     protected void collectSnapshotData(Transaction transaction, String name, String value) {
@@ -229,7 +164,7 @@ public abstract class AgentSideInterceptor extends AGenericInterceptor {
         if (!isInitialized()) {
             initialize();
         }
-        transaction.collectData(name, value, this.snapshotDatascopeOnly);
+        transaction.collectData(name, value, this.dataScopes);
     }
 
     protected void publishEvent(String eventSummary, String severity, String eventType, Map<String, String> details) {
