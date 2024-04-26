@@ -9,18 +9,17 @@
       "name": "CFE-ACESSO B-1",
       "request": "launch",
       "mainClass": "com.dumont.main.JavaServicesApplication",
-      "projectName": "com.dumont-java-services",
-      "vmArgs": "-javaagent:/Users/fdumont/Downloads/AppD/AppServerAgent-1.8-23.12.0.35361/javaagent.jar",
+      "projectName": "java-services",
+      "vmArgs": "-Dserver.port=8070 -javaagent:/Users/fdumont/Downloads/AppD/AppServerAgent-1.8-24.3.0.35708/javaagent.jar -Dappdynamics.agent.applicationName=DUMONT-BB-SIMULATOR -Dappdynamics.agent.tierName=cfe-acesso -Dappdynamics.agent.nodeName=pxl1mov1b036-ee85-8ad2-2d4e316e1bafe76",
       "env": {
         "APPDYNAMICS_CONTROLLER_HOST_NAME": "se-lab.saas.appdynamics.com",
         "APPDYNAMICS_AGENT_ACCOUNT_NAME": "se-lab",
-        "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY": "hj6a4d7h2cuq",
+        "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY": "xxxxx",
         "APPDYNAMICS_CONTROLLER_PORT": "443",
-        "APPDYNAMICS_CONTROLLER_SSL_ENABLED": "true",
-        "APPDYNAMICS_AGENT_APPLICATION_NAME": "DUMONT-BB-SIMULATOR",
-        "APPDYNAMICS_AGENT_TIER_NAME": "cfe-acesso",
-        "APPDYNAMICS_AGENT_NODE_NAME": "pxl1mov1b036-ee85-8ad2-2d4e316e1bafe76",
-        "server.port": 8070
+        "APPDYNAMICS_CONTROLLER_SSL_ENABLED": "true"
+        // "APPDYNAMICS_AGENT_APPLICATION_NAME": "DUMONT-BB-SIMULATOR",
+        // "APPDYNAMICS_AGENT_TIER_NAME": "cfe-acesso",
+        // "APPDYNAMICS_AGENT_NODE_NAME": "pxl1mov1b036-ee85-8ad2-2d4e316e1bafe76"
       }
     },
     {
@@ -28,18 +27,17 @@
       "name": "CFE-ACESSO B-2",
       "request": "launch",
       "mainClass": "com.dumont.main.JavaServicesApplication",
-      "projectName": "com.dumont-java-services",
-      "vmArgs": "-javaagent:/Users/fdumont/Downloads/AppD/AppServerAgent-1.8-23.12.0.35361/javaagent.jar",
+      "projectName": "java-services",
+      "vmArgs": "-Dserver.port=8071 -javaagent:/Users/fdumont/Downloads/AppD/AppServerAgent-1.8-24.3.0.35708/javaagent.jar",
       "env": {
         "APPDYNAMICS_CONTROLLER_HOST_NAME": "se-lab.saas.appdynamics.com",
         "APPDYNAMICS_AGENT_ACCOUNT_NAME": "se-lab",
-        "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY": "hj6a4d7h2cuq",
+        "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY": "xxxxxx",
         "APPDYNAMICS_CONTROLLER_PORT": "443",
         "APPDYNAMICS_CONTROLLER_SSL_ENABLED": "true",
         "APPDYNAMICS_AGENT_APPLICATION_NAME": "DUMONT-BB-SIMULATOR",
         "APPDYNAMICS_AGENT_TIER_NAME": "cfe-acesso",
-        "APPDYNAMICS_AGENT_NODE_NAME": "pxl1mov2b036-ee85-8ad2-2d4e316e1bafe74",
-        "server.port": 8071
+        "APPDYNAMICS_AGENT_NODE_NAME": "pxl1mov2b036-ee85-8ad2-2d4e316e1bafe74"
       }
     },
     {
@@ -47,18 +45,17 @@
       "name": "CFE-ACESSO G-2",
       "request": "launch",
       "mainClass": "com.dumont.main.JavaServicesApplication",
-      "projectName": "com.dumont-java-services",
-      "vmArgs": "-javaagent:/Users/fdumont/Downloads/AppD/AppServerAgent-1.8-23.12.0.35361/javaagent.jar",
+      "projectName": "java-services",
+      "vmArgs": "-Dserver.port=8072 -javaagent:/Users/fdumont/Downloads/AppD/AppServerAgent-1.8-24.3.0.35708/javaagent.jar",
       "env": {
         "APPDYNAMICS_CONTROLLER_HOST_NAME": "se-lab.saas.appdynamics.com",
         "APPDYNAMICS_AGENT_ACCOUNT_NAME": "se-lab",
-        "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY": "hj6a4d7h2cuq",
+        "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY": "xxxxx",
         "APPDYNAMICS_CONTROLLER_PORT": "443",
         "APPDYNAMICS_CONTROLLER_SSL_ENABLED": "true",
         "APPDYNAMICS_AGENT_APPLICATION_NAME": "DUMONT-BB-SIMULATOR",
         "APPDYNAMICS_AGENT_TIER_NAME": "cfe-acesso",
-        "APPDYNAMICS_AGENT_NODE_NAME": "pxl1mov2g036-ee85-8ad2-2d4e316e1bafe75",
-        "server.port": 8072
+        "APPDYNAMICS_AGENT_NODE_NAME": "pxl1mov2g036-ee85-8ad2-2d4e316e1bafe75"
       }
     },
     {
@@ -66,20 +63,18 @@
       "name": "CFE-BBS",
       "request": "launch",
       "mainClass": "com.dumont.main.JavaServicesApplication",
-      "projectName": "com.dumont-java-services",
-      "vmArgs": "-javaagent:/Users/fdumont/Downloads/AppD/AppServerAgent-1.8-23.12.0.35361/javaagent.jar",
+      "projectName": "java-services",
+      "vmArgs": "-Dserver.port=8073 -javaagent:/Users/fdumont/Downloads/AppD/AppServerAgent-1.8-24.3.0.35708/javaagent.jar",
       "env": {
         "APPDYNAMICS_CONTROLLER_HOST_NAME": "se-lab.saas.appdynamics.com",
         "APPDYNAMICS_AGENT_ACCOUNT_NAME": "se-lab",
-        "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY": "hj6a4d7h2cuq",
+        "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY": "xxxxxx",
         "APPDYNAMICS_CONTROLLER_PORT": "443",
         "APPDYNAMICS_CONTROLLER_SSL_ENABLED": "true",
         "APPDYNAMICS_AGENT_APPLICATION_NAME": "DUMONT-BB-SIMULATOR",
         "APPDYNAMICS_AGENT_TIER_NAME": "cfe-bbs",
-        "APPDYNAMICS_AGENT_NODE_NAME": "cfe-bbs-01",
-        "server.port": 8073
+        "APPDYNAMICS_AGENT_NODE_NAME": "cfe-bbs-01"
       }
     }
-
   ]
 }

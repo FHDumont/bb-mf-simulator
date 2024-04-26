@@ -1,7 +1,5 @@
 package com.dumont.services;
 
-import java.util.Random;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,12 +22,8 @@ public class ApiSimulator {
 
 	@RequestMapping(value = "/executeFTW/{transporte}/{padrao}/{codigo}/{nome}/{servico}/{barramento}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public ResponseEntity<String> executeFTW(
-			@PathVariable("transporte") String transporte,
-			@PathVariable("padrao") String padrao,
-			@PathVariable("codigo") String codigo,
-			@PathVariable("nome") String nome,
-			@PathVariable("servico") String servico,
+	public ResponseEntity<String> executeFTW(@PathVariable("transporte") String transporte, @PathVariable("padrao") String padrao,
+			@PathVariable("codigo") String codigo, @PathVariable("nome") String nome, @PathVariable("servico") String servico,
 			@PathVariable("barramento") String barramento) throws Exception {
 
 		InfoTransacao infoTransacao = new InfoTransacao(nome, codigo, padrao);
@@ -38,31 +32,24 @@ public class ApiSimulator {
 		infoTransacao.setServico(servico);
 		Transacao transacao = new Transacao(infoTransacao);
 
-		GerenteTransacao gt = new GerenteTransacao() {
-		};
+		GerenteTransacao gt = new GerenteTransacao() {};
 
 		gt.processar(null, transacao);
 
-		Random rand = new Random();
-		if (rand.nextInt(5) <= 1) {
-			System.out.println("==> TWICE");
-			gt.processar(null, transacao);
-		}
+		// Random rand = new Random();
+		// if (rand.nextInt(5) <= 1) {
+		// System.out.println("==> TWICE");
+		// gt.processar(null, transacao);
+		// }
 
 		return new ResponseEntity<>("{ \"value\" : \"OK\" }", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/executeIIB/{transporte}/{protocolo}/{release}/{sistema}/{sysplex}/{operacao}/{servico}/{aplicacaoProvedora}/{versao}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public ResponseEntity<String> executeIIB(
-			@PathVariable("transporte") String transporte,
-			@PathVariable("protocolo") String protocolo,
-			@PathVariable("release") String release,
-			@PathVariable("sistema") String sistema,
-			@PathVariable("sysplex") String sysplex,
-			@PathVariable("operacao") String operacao,
-			@PathVariable("servico") String servico,
-			@PathVariable("aplicacaoProvedora") String aplicacaoProvedora,
+	public ResponseEntity<String> executeIIB(@PathVariable("transporte") String transporte, @PathVariable("protocolo") String protocolo,
+			@PathVariable("release") String release, @PathVariable("sistema") String sistema, @PathVariable("sysplex") String sysplex,
+			@PathVariable("operacao") String operacao, @PathVariable("servico") String servico, @PathVariable("aplicacaoProvedora") String aplicacaoProvedora,
 			@PathVariable("versao") String versao) throws Exception {
 
 		Identificacao identificacao = new Identificacao();
@@ -85,11 +72,11 @@ public class ApiSimulator {
 		ComunicacaoExecutar comunicacaoExecutar = new ComunicacaoExecutar();
 		comunicacaoExecutar.executar(contextoExecucao);
 
-		Random rand = new Random();
-		if (rand.nextInt(5) <= 1) {
-			System.out.println("==> TWICE");
-			comunicacaoExecutar.executar(contextoExecucao);
-		}
+		// Random rand = new Random();
+		// if (rand.nextInt(5) <= 1) {
+		// System.out.println("==> TWICE");
+		// comunicacaoExecutar.executar(contextoExecucao);
+		// }
 
 		return new ResponseEntity<>("{ \"value\" : \"OK\" }", HttpStatus.OK);
 	}
