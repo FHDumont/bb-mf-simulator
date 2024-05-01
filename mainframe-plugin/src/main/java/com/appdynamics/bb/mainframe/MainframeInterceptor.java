@@ -117,6 +117,9 @@ public class MainframeInterceptor extends AGenericInterceptor {
                 environmentSecond = bbEnvironemnts[1];
             }
 
+            this.getLogger()
+                    .info(String.format("environmentFirst [%s] environmentSecond [%s] metricName [%s]", environmentFirst, environmentSecond, metricName));
+
             String customName = String.format("Server|Component:%s|Custom Metrics|", componentIdString) + basicMetricName;
 
             // FINAL METRICS (EX: FTW - Servcom.CICS)
@@ -223,7 +226,7 @@ public class MainframeInterceptor extends AGenericInterceptor {
         collectSnapshotData(transaction, "Barramento", barramento);
 
         if (exitCall != null) {
-            return new State(exitCall, String.format("FTW - %s.%s", transporte, padrao), codigo, startTime);
+            return new State(exitCall, String.format("FTW - %s.%s", transporte, padrao), String.format("%s - %s", codigo, nome), startTime);
         } else {
             return null;
         }
@@ -244,6 +247,7 @@ public class MainframeInterceptor extends AGenericInterceptor {
 
         // Fields
         Object infoOperacao = getReflectiveObject(contextoExecucao, reflectionInfoOperacao);
+        String operacaoNome = infoOperacao.getClass().getSimpleName();
 
         Object transporte = getReflectiveObject(infoOperacao, reflectionGetTransporte);
         Object protocolo = getReflectiveObject(infoOperacao, reflectionGetProtocolo);
@@ -262,10 +266,11 @@ public class MainframeInterceptor extends AGenericInterceptor {
         collectSnapshotData(transaction, "Trnasporte", String.valueOf(transporte));
         collectSnapshotData(transaction, "Protocolo", String.valueOf(protocolo));
         collectSnapshotData(transaction, "Operacao", operacao);
+        collectSnapshotData(transaction, "Operacao Nome", operacaoNome);
         collectSnapshotData(transaction, "Sistema", sistema);
 
         if (exitCall != null) {
-            return new State(exitCall, String.format("IIB - %s", transporte), operacao, startTime);
+            return new State(exitCall, String.format("IIB - %s", transporte), String.format("%s - %s", operacao, operacaoNome), startTime);
         } else {
             return null;
         }
@@ -359,10 +364,10 @@ public class MainframeInterceptor extends AGenericInterceptor {
                 }
             }
 
-            getLogger().info(String.format("[getBBEnvironment] System.getProperty [%s]", System.getProperty("appdynamics.agent.nodeName")));
-            getLogger().info(String.format("[getBBEnvironment] System.getenv [%s]", System.getenv("APPDYNAMICS_AGENT_NODE_NAME")));
-            getLogger().info(String.format("[getBBEnvironment] getHostName [%s]", InetAddress.getLocalHost().getHostName()));
-            getLogger().info(String.format("[getBBEnvironment] final result [%s]", nodeName));
+            getLogger().debug(String.format("[getBBEnvironment] System.getProperty [%s]", System.getProperty("appdynamics.agent.nodeName")));
+            getLogger().debug(String.format("[getBBEnvironment] System.getenv [%s]", System.getenv("APPDYNAMICS_AGENT_NODE_NAME")));
+            getLogger().debug(String.format("[getBBEnvironment] getHostName [%s]", InetAddress.getLocalHost().getHostName()));
+            getLogger().debug(String.format("[getBBEnvironment] final result [%s]", nodeName));
 
             if (nodeName != null && !"".equals(nodeName)) {
                 if ("p".equalsIgnoreCase(nodeName.substring(0, 1))) {
@@ -379,7 +384,7 @@ public class MainframeInterceptor extends AGenericInterceptor {
                     environmentValues[0] = envNumber;
                     environmentValues[1] = envType;
                 } else {
-                    getLogger().info("[getBBEnvironment] Hierarquia paddrão das métricas, ambiente não é de produção");
+                    getLogger().debug("[getBBEnvironment] Hierarquia paddrão das métricas, ambiente não é de produção");
                 }
 
             }
