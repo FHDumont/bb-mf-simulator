@@ -1,6 +1,7 @@
 package com.appdynamics.bb.mainframe;
 
 import java.net.InetAddress;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -100,6 +101,12 @@ public class MainframeInterceptor extends AGenericInterceptor {
             String metricName = ((State) state).metricName;
             long startTime = ((State) state).startTime;
 
+            basicMetricName = Normalizer.normalize(basicMetricName, Normalizer.Form.NFD);
+            basicMetricName = basicMetricName.replaceAll("\\p{M}", "");
+
+            metricName = Normalizer.normalize(metricName, Normalizer.Form.NFD);
+            metricName = metricName.replaceAll("\\p{M}", "");
+
             if (thrownException != null) {
                 transaction.markAsError(thrownException.getMessage());
                 isError = true;
@@ -118,7 +125,7 @@ public class MainframeInterceptor extends AGenericInterceptor {
             }
 
             this.getLogger()
-                    .info(String.format("environmentFirst [%s] environmentSecond [%s] metricName [%s]", environmentFirst, environmentSecond, metricName));
+                    .debug(String.format("environmentFirst [%s] environmentSecond [%s] metricName [%s]", environmentFirst, environmentSecond, metricName));
 
             String customName = String.format("Server|Component:%s|Custom Metrics|", componentIdString) + basicMetricName;
 
