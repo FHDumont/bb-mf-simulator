@@ -94,7 +94,8 @@ public class MainframeInterceptor extends AGenericInterceptor {
         long endTime = new Date().getTime();
 
         try {
-            Transaction transaction = AppdynamicsAgent.getTransaction();
+            // REMOVED AS REQUESTED BY TICKET #-398068 - [BB] - Ignored Messages Errors and Exceptions
+            // Transaction transaction = AppdynamicsAgent.getTransaction();
 
             ExitCall exitCall = ((State) state).exitCall;
             String basicMetricName = ((State) state).basicMetricName;
@@ -108,7 +109,8 @@ public class MainframeInterceptor extends AGenericInterceptor {
             metricName = metricName.replaceAll("\\p{M}", "");
 
             if (thrownException != null) {
-                transaction.markAsError(thrownException.getMessage());
+                // REMOVED AS REQUESTED BY TICKET #-398068 - [BB] - Ignored Messages Errors and Exceptions
+                // transaction.markAsError(thrownException.getMessage());
                 isError = true;
             }
 
