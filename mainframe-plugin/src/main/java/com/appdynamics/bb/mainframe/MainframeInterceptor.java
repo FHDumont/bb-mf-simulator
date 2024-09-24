@@ -1,3 +1,7 @@
+// https://docs.appdynamics.com/appd/24.x/24.8/en/infrastructure-visibility/machine-agent/extensions-and-custom-metrics/build-a-monitoring-extension-using-scripts
+// https://confluence.corp.appdynamics.com/display/SALESENG/Azure+Monitoring+Extension
+// https://confluence.corp.appdynamics.com/display/~akmal.khodjanov@appdynamics.com/Nginx+monitoring
+
 package com.appdynamics.bb.mainframe;
 
 import java.net.InetAddress;
@@ -132,34 +136,34 @@ public class MainframeInterceptor extends AGenericInterceptor {
             String customName = String.format("Server|Component:%s|Custom Metrics|", componentIdString) + basicMetricName;
 
             // FINAL METRICS (EX: FTW - Servcom.CICS)
-            reportMetric(customName + "|Average Response Time (ms)", endTime - startTime, "AVERAGE", "CURRENT", "COLLECTIVE");
-            reportMetric(customName + "|Calls per Minute", 1, "SUM", "CURRENT", "COLLECTIVE");
-            reportMetric(customName + "|Errors per Minute", isError ? 1 : 0, "SUM", "CURRENT", "COLLECTIVE");
+            reportMetric(customName + "|Average Response Time (ms)", endTime - startTime, "AVERAGE", "AVERAGE", "INDIVIDUAL");
+            reportMetric(customName + "|Calls per Minute", 1, "SUM", "AVERAGE", "INDIVIDUAL");
+            reportMetric(customName + "|Errors per Minute", isError ? 1 : 0, "SUM", "AVERAGE", "INDIVIDUAL");
 
             if (!"".equals(environmentFirst)) {
                 // SUMMARY FOR FIRST BB ENVIRONMENT LEVEL (EX: CCT1)
-                reportMetric(customName + "|" + environmentFirst + "|Average Response Time (ms)", endTime - startTime, "AVERAGE", "CURRENT", "COLLECTIVE");
-                reportMetric(customName + "|" + environmentFirst + "|Calls per Minute", 1, "SUM", "CURRENT", "COLLECTIVE");
-                reportMetric(customName + "|" + environmentFirst + "|Errors per Minute", isError ? 1 : 0, "SUM", "CURRENT", "COLLECTIVE");
+                reportMetric(customName + "|" + environmentFirst + "|Average Response Time (ms)", endTime - startTime, "AVERAGE", "AVERAGE", "INDIVIDUAL");
+                reportMetric(customName + "|" + environmentFirst + "|Calls per Minute", 1, "SUM", "AVREAGE", "INDIVIDUAL");
+                reportMetric(customName + "|" + environmentFirst + "|Errors per Minute", isError ? 1 : 0, "SUM", "AVREAGE", "INDIVIDUAL");
                 // SUMMARY FOR SECOND BB ENVIRONMENT LEVEL (EX: CCT1|BLUE)
                 reportMetric(customName + "|" + environmentFirst + "|" + environmentSecond + "|Average Response Time (ms)", endTime - startTime, "AVERAGE",
-                        "CURRENT", "COLLECTIVE");
-                reportMetric(customName + "|" + environmentFirst + "|" + environmentSecond + "|Calls per Minute", 1, "SUM", "CURRENT", "COLLECTIVE");
-                reportMetric(customName + "|" + environmentFirst + "|" + environmentSecond + "|Errors per Minute", isError ? 1 : 0, "SUM", "CURRENT",
-                        "COLLECTIVE");
+                        "AVERAGE", "INDIVIDUAL");
+                reportMetric(customName + "|" + environmentFirst + "|" + environmentSecond + "|Calls per Minute", 1, "SUM", "AVERAGE", "INDIVIDUAL");
+                reportMetric(customName + "|" + environmentFirst + "|" + environmentSecond + "|Errors per Minute", isError ? 1 : 0, "SUM", "AVERAGE",
+                        "INDIVIDUAL");
 
                 // SUMMARY FOR TYPE CUSTOM BACKEND AND BB ENVIRONMENT (EX: CCT1|BLUE|OPERATION)
                 reportMetric(customName + "|" + environmentFirst + "|" + environmentSecond + "|" + metricName + "|Average Response Time (ms)",
-                        endTime - startTime, "AVERAGE", "CURRENT", "COLLECTIVE");
-                reportMetric(customName + "|" + environmentFirst + "|" + environmentSecond + "|" + metricName + "|Calls per Minute", 1, "SUM", "CURRENT",
-                        "COLLECTIVE");
+                        endTime - startTime, "AVERAGE", "AVERAGE", "INDIVIDUAL");
+                reportMetric(customName + "|" + environmentFirst + "|" + environmentSecond + "|" + metricName + "|Calls per Minute", 1, "SUM", "AVERAGE",
+                        "INDIVIDUAL");
                 reportMetric(customName + "|" + environmentFirst + "|" + environmentSecond + "|" + metricName + "|Errors per Minute", isError ? 1 : 0, "SUM",
-                        "CURRENT", "COLLECTIVE");
+                        "AVERAGE", "INDIVIDUAL");
             } else {
                 // SUMMARY FOR TYPE CUSTOM BACKEND AND WITHOUT BB ENVIRONMENT (EX: OPERATION)
-                reportMetric(customName + "|" + metricName + "|Average Response Time (ms)", endTime - startTime, "AVERAGE", "CURRENT", "COLLECTIVE");
-                reportMetric(customName + "|" + metricName + "|Calls per Minute", 1, "SUM", "CURRENT", "COLLECTIVE");
-                reportMetric(customName + "|" + metricName + "|Errors per Minute", isError ? 1 : 0, "SUM", "CURRENT", "COLLECTIVE");
+                reportMetric(customName + "|" + metricName + "|Average Response Time (ms)", endTime - startTime, "AVERAGE", "AVERAGE", "INDIVIDUAL");
+                reportMetric(customName + "|" + metricName + "|Calls per Minute", 1, "SUM", "AVERAGE", "INDIVIDUAL");
+                reportMetric(customName + "|" + metricName + "|Errors per Minute", isError ? 1 : 0, "SUM", "AVERAGE", "INDIVIDUAL");
             }
 
         } catch (Exception ex) {
