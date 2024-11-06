@@ -276,7 +276,7 @@ public class MainframeInterceptor extends AGenericInterceptor {
         exitCall = transaction.startExitCall(map, exitCallName, ExitTypes.CUSTOM, false);
 
         // Data Collectors
-        collectSnapshotData(transaction, "Trnasporte", String.valueOf(transporte));
+        collectSnapshotData(transaction, "Transporte", String.valueOf(transporte));
         collectSnapshotData(transaction, "Protocolo", String.valueOf(protocolo));
         collectSnapshotData(transaction, "Operacao", operacao);
         collectSnapshotData(transaction, "Operacao Nome", operacaoNome);
